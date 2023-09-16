@@ -25,7 +25,7 @@ while (true) {
    if (daysOfWeek.includes(day)) { 
     return day;
    } else {
-    alert("Día de la semana no válido. Use un día de la semana válido, como 'Lunes', 'Martes', etc.");
+    alert("Día de la semana no válido. Usá un día de la semana válido, como 'Lunes', 'Martes', etc.");
    }
  }
 }
@@ -49,9 +49,9 @@ while (true) {
 
 for (const day of daysOfWeek) {
   if (taskList[day]) {
-    console.log(`${day}:`);
+    console.log(day);
     for (const task of taskList[day]) {
-      console.log(`  - ${task}`);
+      console.log(" - " + task);
     }
   }
 }
