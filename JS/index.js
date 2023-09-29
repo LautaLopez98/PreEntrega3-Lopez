@@ -69,12 +69,3 @@ taskForm.addEventListener("submit", function (event) {
 });
 
 updateTaskList();
-
-for (const day of daysOfWeek) {
-  if (taskList[day]) {
-    console.log(day);
-    for (const task of taskList[day]) {
-      console.log(" - " + task);
-    }
-  }
-}
