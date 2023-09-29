@@ -3,26 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda de Tareas Diarias</title>
-    <link rel="stylesheet" href="./Css/estilos.css">
+    <link rel="stylesheet" href="/Css/estilos.css">
+    <title>Tareas Semanales</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Agenda de Tareas Diarias</h1>
-        <div class="form">
-            <label for="dia">Día de la semana:</label>
-            <input type="text" id="dia" placeholder="Lunes, Martes, etc.">
-            <label for="tarea">Tarea:</label>
-            <input type="text" id="tarea" placeholder="Ej: Comprar, estudiar, etc.">
-            <div class="buttons">
-                <button id="agregar">Agregar Tarea</button>
-                <button id="eliminar">Eliminar Tarea</button>
-            </div>
+    <h1>Agenda de Tareas Semanales</h1>
+    <section class="greet">
+        <label for="name">Ingresa tu nombre:</label>
+        <input type="text" id="name" placeholder="Ingresá tu nombre por acá">
+        <button class="addButton" id="greetButton">Saludar</button>
+        <div id="greeting"></div>
+    </section>
+    <form id="taskForm">
+        <label for="task">Ingresá una tarea:</label>
+        <input type="text" id="task" required>
+        <label for="day">Elegí el día de la semana donde la quieras agendar:</label>
+        <select id="day" required>
+            <option value="Lunes">Lunes</option>
+            <option value="Martes">Martes</option>
+            <option value="Miercoles">Miércoles</option>
+            <option value="Jueves">Jueves</option>
+            <option value="Viernes">Viernes</option>
+            <option value="Sabado">Sábado</option>
+            <option value="Domingo">Domingo</option>
+        </select>
+        <button class="addButton" type="submit">Agregar Tarea</button>
+    </form>
+    <div class="days" id="taskList">
+        <div class="day" id="Lunes">
+            <h2>Lunes</h2>
+            <ul></ul>
         </div>
-        <div class="lista-tareas">
-            <!-- aca se van a ir agregando las tareas a medida que el usuario las cargue en el formulario  -->
+        <div class="day" id="Martes">
+            <h2>Martes</h2>
+            <ul></ul>
+        </div>
+        <div class="day" id="Miercoles">
+            <h2>Miércoles</h2>
+            <ul></ul>
+        </div>
+        <div class="day" id="Jueves">
+            <h2>Jueves</h2>
+            <ul></ul>
+        </div>
+        <div class="day" id="Viernes">
+            <h2>Viernes</h2>
+            <ul></ul>
+        </div>
+        <div class="day" id="Sabado">
+            <h2>Sábado</h2>
+            <ul></ul>
+        </div>
+        <div class="day" id="Domingo">
+            <h2>Domingo</h2>
+            <ul></ul>
         </div>
     </div>
-    <script src="./JS/index.js"></script>
+    <script src="/JS/index.js"></script>
 </body>
 </html>

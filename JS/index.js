@@ -1,51 +1,74 @@
+const nameInput = document.getElementById("name");
+const greetButton = document.getElementById("greetButton");
+const greetingDiv = document.getElementById("greeting");
 
-let welcome = () => {
-  let name = prompt("Ingresá tu nombre: ");
-  alert(" Hola " + name + ", " + "buen día!")
-}
+greetButton.addEventListener("click", function () {
+  const userName = nameInput.value.trim();
+  if (userName !== "") {
+    const greetingMessage = `¡Hola, ${userName}!`;
+    greetingDiv.textContent = greetingMessage;
+  } else {
+    greetingDiv.textContent = "Por favor, ingresa tu nombre.";
+  }
+});
 
-welcome();
+const daysOfWeek = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];
+const taskList = JSON.parse(localStorage.getItem('taskList')) || {};
 
-const daysOfWeek = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]
-const taskList = {};
+function updateTaskList() {
+  for (const day of daysOfWeek) {
+    const taskListForDay = taskList[day] || [];
+    const ul = document.querySelector(`#${day} ul`);
+    ul.innerHTML = "";
+    for (const task of taskListForDay) {
+      const li = document.createElement("li");
+      li.textContent = task;
 
-function promptTask() {
- const task = prompt("Ingresá una tarea (o escribí 'fin' para terminar):")
- if (task.toLowerCase() === "fin"){
-    return null
- }
- else{
-    return task
- }
-}
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "X";
+      deleteButton.addEventListener("click", () => {
+        deleteTask(day, task);
+        updateTaskList();
+      });
+      li.appendChild(deleteButton);
 
-function promptDay() {
-while (true) {
-   const day = prompt("Ingresá el día de la semana donde quieras anotarla (por ejemplo, 'Lunes'):");
-   if (daysOfWeek.includes(day)) { 
-    return day;
-   } else {
-    alert("Día de la semana no válido. Usá un día de la semana válido, como 'Lunes', 'Martes', etc.");
-   }
- }
+      ul.appendChild(li);
+    }
+  }
 }
 
 function addTask(day, task) {
- if (!taskList[day]) {
-   taskList[day] = [];
- }
- 
- taskList[day].push(task);
+  if (!taskList[day]) {
+    taskList[day] = [];
+  }
+
+  taskList[day].push(task);
+  localStorage.setItem('taskList', JSON.stringify(taskList));
 }
 
-while (true) {
-  const task = promptTask();
-  if (!task) {
-    break;
+function deleteTask(day, task) {
+  if (taskList[day]) {
+    taskList[day] = taskList[day].filter(item => item !== task);
+    localStorage.setItem('taskList', JSON.stringify(taskList));
   }
-  const day = promptDay();
-  addTask(day, task);
 }
+
+const taskForm = document.getElementById("taskForm");
+taskForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+  const taskInput = document.getElementById("task");
+  const daySelect = document.getElementById("day");
+  const task = taskInput.value;
+  const day = daySelect.value;
+
+  if (task.trim() !== "") {
+    addTask(day, task);
+    updateTaskList();
+    taskInput.value = "";
+  }
+});
+
+updateTaskList();
 
 for (const day of daysOfWeek) {
   if (taskList[day]) {
