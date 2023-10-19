@@ -1,12 +1,22 @@
 const nameInput = document.getElementById("name");
 const greetButton = document.getElementById("greetButton");
 const greetingDiv = document.getElementById("greeting");
+const rickImage = document.getElementById("rickImage");
 
 greetButton.addEventListener("click", function () {
   const userName = nameInput.value.trim();
   if (userName !== "") {
     const greetingMessage = `¡Hola, ${userName}!`;
     greetingDiv.textContent = greetingMessage;
+    fetch('https://rickandmortyapi.com/api/character/1')
+      .then(response => response.json())
+      .then(data => {
+        const imageUrl = data.image;
+        rickImage.src = imageUrl;
+      })
+      .catch(error => {
+        rickImage.src = "";
+      });
   } else {
     greetingDiv.textContent = "Por favor, ingresa tu nombre.";
   }
@@ -65,7 +75,25 @@ taskForm.addEventListener("submit", function (event) {
     addTask(day, task);
     updateTaskList();
     taskInput.value = "";
+    Toastify({
+      text: `Tarea "${task}" agregada con éxito.`,
+      duration: 3000,
+      close: true,
+    }).showToast();
   }
 });
 
-updateTaskList();
+function simulateLoading() {
+  const loadingOverlay = document.createElement("div");
+  loadingOverlay.id = "loading-overlay";
+  const loadingMessage = document.createElement("p");
+  loadingMessage.textContent = "Cargando...";
+  loadingOverlay.appendChild(loadingMessage);
+  document.body.appendChild(loadingOverlay);
+  setTimeout(() => {
+    document.getElementById("loading-overlay").style.display = "none";
+    updateTaskList();
+  }, 1000);
+}
+
+simulateLoading();
